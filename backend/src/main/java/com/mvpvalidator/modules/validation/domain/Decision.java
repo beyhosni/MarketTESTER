@@ -35,7 +35,3 @@ public class Decision {
     @Column(name = "created_at", insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }
-
-enum DecisionResult {
-    VALIDATED, INVALIDATED, PIVOT, ITERATE
-}

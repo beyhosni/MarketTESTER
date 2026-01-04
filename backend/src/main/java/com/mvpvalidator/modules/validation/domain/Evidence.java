@@ -42,7 +42,3 @@ public class Evidence {
     @Column(name = "created_at", insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }
-
-enum EvidenceType {
-    QUALITATIVE, QUANTITATIVE
-}

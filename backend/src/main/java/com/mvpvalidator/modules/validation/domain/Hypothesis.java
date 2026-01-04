@@ -50,11 +50,3 @@ public class Hypothesis {
     @OneToMany(mappedBy = "hypothesis")
     private List<Decision> decisions;
 }
-
-enum HypothesisType {
-    DESIRABILITY, VIABILITY, FEASIBILITY, USABILITY
-}
-
-enum HypothesisStatus {
-    DRAFT, TESTED, VALIDATED, INVALIDATED
-}

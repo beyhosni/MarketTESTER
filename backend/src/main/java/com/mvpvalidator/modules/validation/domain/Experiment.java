@@ -44,11 +44,3 @@ public class Experiment {
     @OneToMany(mappedBy = "experiment")
     private List<Evidence> evidence;
 }
-
-enum ExperimentMethod {
-    INTERVIEW, SURVEY, LANDING_PAGE, ADS, PROTOTYPE
-}
-
-enum ExperimentStatus {
-    PLANNED, IN_PROGRESS, DONE
-}
