@@ -1,0 +1,64 @@
+package com.mvpvalidator.modules.project.controller;
+
+import com.mvpvalidator.core.TenantContext;
+import com.mvpvalidator.modules.analytics.service.MetricImportService;
+import com.mvpvalidator.modules.project.domain.Project;
+import com.mvpvalidator.modules.project.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/projects")
+@RequiredArgsConstructor
+public class ProjectController {
+
+    private final ProjectRepository projectRepository;
+    private final MetricImportService metricImportService;
+
+    @GetMapping
+    public List<Project> getProjects() {
+        return projectRepository.findByTenantId(TenantContext.getTenantId());
+    }
+
+    @PostMapping
+    public Project createProject(@RequestBody Project project) {
+        project.setTenantId(TenantContext.getTenantId());
+        // project.setCreatedAt(OffsetDateTime.now()); handled by DB or listener?
+        // JPA doesn't auto-set without listener/annotation usually if field is null,
+        // reliant on DB default.
+        return projectRepository.save(project);
+    }
+
+    @PostMapping("/{id}/metrics/import")
+    public ResponseEntity<Void> importMetrics(
+            @PathVariable UUID id,
+            @RequestParam("file") MultipartFile file) {
+        metricImportService.importMetrics(id, file);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/dashboard")
+    public ResponseEntity<DashboardDto> getDashboard(@PathVariable UUID id) {
+        // Mock Implementation for MVP speed, real impl would inject a DashboardService
+        DashboardDto dto = new DashboardDto();
+        dto.setProjectId(id);
+        dto.setHypothesisCount(5); // TODO: fetch from repo
+        dto.setValidatedHypothesisCount(2);
+        dto.setValidationReadinessScore(75);
+        return ResponseEntity.ok(dto);
+    }
+
+    @lombok.Data
+    static class DashboardDto {
+        private UUID projectId;
+        private int hypothesisCount;
+        private int validatedHypothesisCount;
+        private int validationReadinessScore;
+    }
+}
