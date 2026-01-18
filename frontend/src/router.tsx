@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Experiments from './pages/Experiments';
 import ExperimentForm from './pages/ExperimentForm';
+import Hypotheses from './pages/Hypotheses';
+import HypothesisForm from './pages/HypothesisForm';
 import Validation from './pages/Validation';
 import { ProtectedRoute } from './components/ProtectedRoute'; // Assumed import path
 
@@ -39,6 +41,14 @@ export const router = createBrowserRouter([
           {
             path: 'experiments/:id/validate',
             element: <Validation />,
+          },
+          {
+            path: 'hypotheses',
+            element: <Hypotheses />,
+          },
+          {
+            path: 'hypotheses/new',
+            element: <HypothesisForm />,
           },
         ],
       },

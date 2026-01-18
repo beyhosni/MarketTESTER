@@ -1,17 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FlaskConical, LogOut } from 'lucide-react';
-import clsx from 'clsx'; // Assuming clsx is installed or I should use template literals if not found.
-// Wait, I installed clsx? I put 'axios zustand react-router-dom lucide-react' in command 86.
-// I did NOT install clsx or tailwind-merge. I should use standard template literals or install them.
-// I'll stick to template literals to avoid missing deps issues since I'm not 100% sure I installed clsx.
-// Actually, I can just use simple string concat.
+import { LayoutDashboard, FlaskConical, Target, LogOut } from 'lucide-react';
 
 export default function Sidebar() {
     const location = useLocation();
 
     const navItems = [
         { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-        { label: 'Expires', path: '/experiments', icon: FlaskConical },
+        { label: 'Hypotheses', path: '/hypotheses', icon: Target },
+        { label: 'Experiments', path: '/experiments', icon: FlaskConical },
     ];
 
     return (
