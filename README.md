@@ -11,27 +11,66 @@
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Technology Stack Architecture
 
-### Backend 🛡️
-- **Language**: Java 17
-- **Framework**: Spring Boot 3.2
-- **Database**: PostgreSQL (with Flyway for migrations)
-- **Security**: Spring Security + JWT (Stateless Authentication)
-- **Documentation**: OpenAPI 3 (Swagger UI)
-- **Tools**: Lombok, MapStruct
+```mermaid
+graph TD
+    subgraph Client [🎨 Frontend (Client Side)]
+        direction TB
+        React[React 18]
+        TS[TypeScript]
+        Vite[Vite Bundler]
+        Store[Zustand Store]
+        UI[Lucide Icons / CSS]
+        
+        React --> TS
+        React --> Store
+        React --> UI
+        React --> Vite
+    end
 
-### Frontend 🎨
-- **Framework**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **State Management**: Zustand
-- **Routing**: React Router DOM (v6)
-- **Styling**: CSS Modules / Custom Design System (Premium Look)
-- **Icons**: Lucide-React
-- **HTTP Client**: Axios (with Interceptors)
+    subgraph Server [🛡️ Backend (Server Side)]
+        direction TB
+        SB[Spring Boot 3.2]
+        Java[Java 17]
+        Security[Spring Security + JWT]
+        Docs[OpenAPI / Swagger]
+        
+        SB --> Java
+        SB --> Security
+        SB --> Docs
+    end
 
-### Infrastructure 🏗️
-- **Docker Compose**: Orchestrates Backend + Database.
+    subgraph Infrastructure [💾 Data & Infra]
+        direction TB
+        PG[(PostgreSQL)]
+        Flyway[Flyway Migrations]
+        Docker[Docker Compose]
+    end
+
+    Client <-->|REST API / JSON| Server
+    Server <-->|JPA / Hibnerate| PG
+    Flyway -->|Schema Versioning| PG
+    Docker -.->|Orchestrates| Client
+    Docker -.->|Orchestrates| Server
+    Docker -.->|Orchestrates| PG
+```
+
+### Detailed Tech Stack
+
+#### Frontend 🎨
+- **Core**: React 18, TypeScript, Vite
+- **State**: Zustand
+- **Networking**: Axios
+- **Routing**: React Router DOM v6
+- **Styling**: CSS Modules, Custom Design System
+
+#### Backend 🛡️
+- **Core**: Java 17, Spring Boot 3.2
+- **Data**: Spring Data JPA, Hibernate, PostgreSQL
+- **Security**: Spring Security, JWT (Stateless)
+- **Documentation**: SpringDoc OpenAPI (Swagger UI)
+- **Tools**: Lombok, MapStruct, Flyway
 
 ---
 
@@ -41,7 +80,6 @@
 - **Java 17+**
 - **Node.js 18+**
 - **Docker** & **Docker Compose**
-- **Maven** (optional if using mvnw)
 
 ### 1. Start the Database (and Backend optionally)
 ```bash
@@ -51,7 +89,6 @@ docker-compose up -d
 *Note: This starts PostgreSQL on port 5432 and the Backend on 8080.*
 
 ### 2. Run Backend (Development Mode)
-If you prefer running the backend locally (e.g., for debugging):
 ```bash
 cd backend
 mvn spring-boot:run
@@ -68,11 +105,6 @@ npm run dev
 - **App URL**: `http://localhost:5173`
 
 ---
-
-## 📚 API Documentation
-The backend exposes a fully interactive Swagger UI documentation.
-1. Start the backend.
-2. Visit: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ## 🧪 Testing
 - **Backend**: `mvn test` (Unit & Integration tests)
