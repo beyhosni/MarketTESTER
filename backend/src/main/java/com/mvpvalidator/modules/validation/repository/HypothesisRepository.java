@@ -7,4 +7,8 @@ import java.util.UUID;
 
 public interface HypothesisRepository extends JpaRepository<Hypothesis, UUID> {
     List<Hypothesis> findByProjectId(UUID projectId);
+
+    long countByProjectId(UUID projectId);
+
+    long countByProjectIdAndStatus(UUID projectId, HypothesisStatus status);
 }

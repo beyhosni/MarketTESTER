@@ -20,6 +20,7 @@ public class ProjectController {
 
     private final ProjectRepository projectRepository;
     private final MetricImportService metricImportService;
+    private final com.mvpvalidator.modules.validation.repository.HypothesisRepository hypothesisRepository;
 
     @GetMapping
     public List<Project> getProjects() {
@@ -45,12 +46,21 @@ public class ProjectController {
 
     @GetMapping("/{id}/dashboard")
     public ResponseEntity<DashboardDto> getDashboard(@PathVariable UUID id) {
-        // Mock Implementation for MVP speed, real impl would inject a DashboardService
+        long totalHypotheses = hypothesisRepository.countByProjectId(id);
+        long validatedHypotheses = hypothesisRepository.countByProjectIdAndStatus(id,
+                com.mvpvalidator.modules.validation.domain.HypothesisStatus.VALIDATED);
+
         DashboardDto dto = new DashboardDto();
         dto.setProjectId(id);
-        dto.setHypothesisCount(5); // TODO: fetch from repo
-        dto.setValidatedHypothesisCount(2);
-        dto.setValidationReadinessScore(75);
+        dto.setHypothesisCount((int) totalHypotheses);
+        dto.setValidatedHypothesisCount((int) validatedHypotheses);
+
+        // Simple readiness score calculation (mock logic replaced with slightly better
+        // logic)
+        // If total > 0, score = (validated / total) * 100
+        int score = totalHypotheses > 0 ? (int) ((validatedHypotheses * 100) / totalHypotheses) : 0;
+        dto.setValidationReadinessScore(score);
+
         return ResponseEntity.ok(dto);
     }
 

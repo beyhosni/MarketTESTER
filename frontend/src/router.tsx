@@ -2,6 +2,8 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Experiments from './pages/Experiments';
+import ExperimentForm from './pages/ExperimentForm';
 import { ProtectedRoute } from './components/ProtectedRoute'; // Assumed import path
 
 export const router = createBrowserRouter([
@@ -27,7 +29,11 @@ export const router = createBrowserRouter([
           },
           {
             path: 'experiments',
-            element: <div>Experiments List (TODO)</div>,
+            element: <Experiments />,
+          },
+          {
+            path: 'experiments/new',
+            element: <ExperimentForm />,
           },
         ],
       },

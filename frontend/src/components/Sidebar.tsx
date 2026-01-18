@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, flask-conical as FlaskConical, LogOut } from 'lucide-react';
+import { LayoutDashboard, FlaskConical, LogOut } from 'lucide-react';
 import clsx from 'clsx'; // Assuming clsx is installed or I should use template literals if not found.
 // Wait, I installed clsx? I put 'axios zustand react-router-dom lucide-react' in command 86.
 // I did NOT install clsx or tailwind-merge. I should use standard template literals or install them.
