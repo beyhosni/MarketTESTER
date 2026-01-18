@@ -7,6 +7,15 @@ export interface Experiment {
     status: 'PLANNED' | 'IN_PROGRESS' | 'DONE';
     startDate?: string;
     endDate?: string;
+    evidence?: Evidence[];
+}
+
+export interface Evidence {
+    id?: string;
+    type: 'INTERVIEW' | 'SURVEY' | 'DATA_ANALYSIS' | 'OTHER';
+    summary: string;
+    confidenceScore: number; // 0-100
+    attachmentUrl?: string;
 }
 
 export const experimentService = {
@@ -22,6 +31,11 @@ export const experimentService = {
 
     async getById(id: string) {
         const response = await api.get<Experiment>(`/experiments/${id}`);
+        return response.data;
+    },
+
+    async addEvidence(experimentId: string, evidence: Evidence) {
+        const response = await api.post<Evidence>(`/experiments/${experimentId}/evidence`, evidence);
         return response.data;
     }
 };

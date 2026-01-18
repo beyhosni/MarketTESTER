@@ -100,13 +100,15 @@ export default function Experiments() {
                             }}>
                                 {exp.description || 'No description provided.'}
                             </p>
-                            <button style={{
-                                alignSelf: 'flex-start',
-                                color: 'var(--color-primary)',
-                                fontSize: '0.875rem',
-                                fontWeight: 500
-                            }}>
-                                View Details →
+                            <button
+                                onClick={() => navigate(`/experiments/${exp.id}/validate`)}
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    color: 'var(--color-primary)',
+                                    fontSize: '0.875rem',
+                                    fontWeight: 500
+                                }}>
+                                Validate / View Details →
                             </button>
                         </div>
                     ))

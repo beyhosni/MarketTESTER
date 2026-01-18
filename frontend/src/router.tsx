@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Experiments from './pages/Experiments';
 import ExperimentForm from './pages/ExperimentForm';
+import Validation from './pages/Validation';
 import { ProtectedRoute } from './components/ProtectedRoute'; // Assumed import path
 
 export const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
           {
             path: 'experiments/new',
             element: <ExperimentForm />,
+          },
+          {
+            path: 'experiments/:id/validate',
+            element: <Validation />,
           },
         ],
       },
